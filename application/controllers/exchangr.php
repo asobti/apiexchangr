@@ -9,15 +9,15 @@ class Exchangr extends CI_Controller {
 
     public function index()
     {
+
     	//print_r($_GET); die();
 		// make the API call using the same Request method the user used
 		$endpoint = $this->input->get_post('endpoint');
 
-		if ($endpoint !== FALSE) {
-
-			$endpoint = urldecode($endpoint);
+		if ($endpoint !== FALSE) {			
+			$endpoint = urldecode($endpoint);			
 			$response = '';
-
+		
 			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				$response = $this->post($endpoint);
 			} else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -47,10 +47,15 @@ class Exchangr extends CI_Controller {
     	return $this->curl->simple_post($endpoint, $payload);
     }
 
-    private function get($endpoint) {
-    	return $this->curl->simple_get('$endpoint');
+    private function get($endpoint) {    	
+    	
+    	$response = $this->curl->simple_get($endpoint, array(CURLOPT_ENCODING => 'identity'));
+    	if ($response === FALSE) {
+    		echo $this->curl->error_string;
+    	} else {   		
+    		echo $response;
+    	}
     }
-
 }
 
 /* End of file exchangr.php */

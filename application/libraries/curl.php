@@ -305,7 +305,7 @@ class Curl {
 
 		// Request failed
 		if ($this->response === FALSE)
-		{
+		{		
 			$errno = curl_errno($this->session);
 			$error = curl_error($this->session);
 
@@ -320,10 +320,11 @@ class Curl {
 
 		// Request successful
 		else
-		{
+		{			
 			curl_close($this->session);
 			$this->last_response = $this->response;
 			$this->set_defaults();
+			
 			return $this->last_response;
 		}
 	}
